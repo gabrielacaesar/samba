@@ -27,7 +27,11 @@ public class TranscodingJobService {
 	public Response create(CreateJobRequest req) {
 		TranscodingJob job = zencoder.create(req.getInputPath());
 		if(job != null) {
-			return Response.ok(job, MediaType.APPLICATION_JSON_TYPE).build();
+			return Response
+					.ok(job, MediaType.APPLICATION_JSON_TYPE)
+					.header("Access-Control-Allow-Origin", "*")
+			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .build();
 		} else {
 			return Response.serverError().build();
 		}
@@ -39,7 +43,11 @@ public class TranscodingJobService {
 	public Response get(@PathParam("id") int id) {
 		TranscodingJob job = zencoder.get(id);
 		if(job != null) {
-			return Response.ok(job, MediaType.APPLICATION_JSON_TYPE).build();
+			return Response
+					.ok(job, MediaType.APPLICATION_JSON_TYPE)
+					.header("Access-Control-Allow-Origin", "*")
+			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .build();
 		} else {
 			return Response.serverError().build();
 		}
