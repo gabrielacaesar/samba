@@ -1,2 +1,8 @@
 sambaserver/build/**
 sambaserver/.gradle/**
+sambaclient/dist/**
+sambaclient/node_modules/**
+.metadata/**
+.recommenders/**
+RemoteSystemsTempFiles/**
+sambaserver/.settings/**

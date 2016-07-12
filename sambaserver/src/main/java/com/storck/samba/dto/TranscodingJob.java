@@ -1,18 +1,17 @@
 package com.storck.samba.dto;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class TranscodingJob {
 	
 	private Integer id;
-	private Date createdAt;
-	private Date finishedAt;
-	private String state;
+	private String createdAt;
+	private String finishedAt;
+	private JobStatus state;
 	private String inputPath;
 	private String outputPath;
+	private Double progress;
 	
 	public TranscodingJob() {}
 	
@@ -22,22 +21,22 @@ public class TranscodingJob {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Date getFinishedAt() {
+	public String getFinishedAt() {
 		return finishedAt;
 	}
-	public void setFinishedAt(Date finishedAt) {
+	public void setFinishedAt(String finishedAt) {
 		this.finishedAt = finishedAt;
 	}
-	public String getState() {
+	public JobStatus getState() {
 		return state;
 	}
-	public void setState(String state) {
+	public void setState(JobStatus state) {
 		this.state = state;
 	}
 	public String getInputPath() {
@@ -52,5 +51,11 @@ public class TranscodingJob {
 	public void setOutputPath(String outputPath) {
 		this.outputPath = outputPath;
 	}
+	public Double getProgress() {
+		return progress;
+	}
+	public void setProgress(Double progress) {
+		this.progress = progress;
+	}	
 
 }
