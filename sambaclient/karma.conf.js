@@ -2,13 +2,11 @@ module.exports = function(config) {
 	config.set({
 		frameworks: ['jasmine', 'browserify'],
 		files: [
-			'app/config/**/*.js',
 			'app/scripts/**/*.js',
 			'test/**/*.spec.js'
 		],
 		preprocessors: {
 			'test/**/*.spec.js': ['browserify'],
-			'app/config/**/*.js': ['browserify'],
 			'app/scripts/**/*.js': ['browserify'],
 		},
 		browserify: {
@@ -25,7 +23,8 @@ module.exports = function(config) {
 						.transform('aliasify', {
 							replacements: {
 								'pages/(.*)': './app/scripts/pages/$1',
-								'services/(.*)': './app/scripts/services/$1'
+								'services/(.*)': './app/scripts/services/$1',
+								'ThemeWrapper': './app/scripts/ThemeWrapper.js'
 							}
 						});
 				});
@@ -36,7 +35,7 @@ module.exports = function(config) {
 		colors: true,
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
-		browsers: ['PhantomJS'],
+		browsers: ['Chrome'],
 		singleRun: false
 	});
 };

@@ -63,8 +63,10 @@ var JobsListPage = React.createClass({
 	renderRow: function(job) {
 		var icon = <ErrorIcon />;
 		switch(job.state) {
-			case "FINISHED": icon = <DoneIcon />; break;
-			case "PROGRESS": icon = <AutoRenewIcon />; break;
+			case 'FINISHED': icon = <DoneIcon />; break;
+			case 'PROGRESS':
+			case 'WAITING':
+				icon = <AutoRenewIcon />; break;
 		}
 		return (
 			<ListItem

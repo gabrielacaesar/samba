@@ -22,7 +22,8 @@ function applyTransformations(b) {
 	.transform('aliasify', {
 		replacements: {
 			'pages/(.*)': './app/scripts/pages/$1',
-			'services/(.*)': './app/scripts/services/$1'
+			'services/(.*)': './app/scripts/services/$1',
+			'ThemeWrapper': './app/scripts/ThemeWrapper.js'
 		}
 	});
 }
