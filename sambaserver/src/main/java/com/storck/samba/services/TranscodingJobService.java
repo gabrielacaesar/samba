@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -32,7 +33,8 @@ public class TranscodingJobService {
 			return Response
 					.ok(job, MediaType.APPLICATION_JSON_TYPE)
 					.header("Access-Control-Allow-Origin", "*")
-			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+			        .header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE")
 			        .build();
 		} else {
 			return Response.serverError().build();
@@ -47,7 +49,7 @@ public class TranscodingJobService {
 			return Response
 					.ok(jobs, MediaType.APPLICATION_JSON_TYPE)
 					.header("Access-Control-Allow-Origin", "*")
-			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE")
 			        .build();
 		} else {
 			return Response.serverError().build();
@@ -63,11 +65,21 @@ public class TranscodingJobService {
 			return Response
 					.ok(job, MediaType.APPLICATION_JSON_TYPE)
 					.header("Access-Control-Allow-Origin", "*")
-			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE")
 			        .build();
 		} else {
 			return Response.serverError().build();
 		}
+	}
+	
+	@OPTIONS
+	public Response preFlight() {
+	    return Response
+	    		.ok()
+				.header("Access-Control-Allow-Origin", "*")
+		        .header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE")
+		        .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+		        .build();
 	}
 
 }

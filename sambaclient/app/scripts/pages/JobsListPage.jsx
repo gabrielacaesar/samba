@@ -1,5 +1,5 @@
 var React = require('react');
-var { Card, CardHeader, CardText, List, ListItem, LinearProgress, FloatingActionButton } = require('material-ui');
+var { Card, CardText, List, ListItem, LinearProgress, FloatingActionButton } = require('material-ui');
 var JobService = require('services/JobService');
 var _ = require('lodash');
 

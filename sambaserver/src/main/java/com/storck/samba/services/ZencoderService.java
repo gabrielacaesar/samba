@@ -123,7 +123,10 @@ public class ZencoderService {
 	
 	private TranscodingJob parse(String jobJson) throws Exception {
 		TranscodingJob job = new TranscodingJob();
-		JSONObject json = new JSONObject(jobJson).getJSONObject("job");
+		JSONObject json = new JSONObject(jobJson);
+		if(json.has("job")) {
+			json = json.getJSONObject("job");
+		}
 		
 		if(json.has("id")) {
 			job.setId(json.getInt("id"));
