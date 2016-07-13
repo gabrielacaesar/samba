@@ -52,7 +52,7 @@ var JobsListPage = React.createClass({
 				<FloatingActionButton
 					secondary={true}
 					onClick={this.navigateToNewJob}
-					style={{margin: 24, position: 'absolute', bottom: 0, right: 0}}
+					style={{margin: 24, position: 'fixed', bottom: 0, right: 0}}
 				>
 					<ContentAddIcon />
 				</FloatingActionButton>

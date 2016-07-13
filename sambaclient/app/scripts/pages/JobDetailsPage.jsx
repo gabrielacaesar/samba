@@ -1,5 +1,5 @@
 var React = require('react');
-var { Card, CardHeader, CardMedia, Avatar } = require('material-ui');
+var { Card, CardHeader, CardMedia, Avatar, LinearProgress } = require('material-ui');
 var JobService = require('services/JobService');
 
 var JobsListPage = React.createClass({
@@ -15,9 +15,19 @@ var JobsListPage = React.createClass({
 		};
 	},
 	componentDidMount: function() {
+		this.loadJobDetails();
+		this.interval = setInterval(this.loadJobDetails, 2000);
+	},
+	componentWillUnmount: function() {
+		clearInterval(this.interval);
+	},
+	loadJobDetails: function() {
 		var self = this;
 		self.setState({loading: true});
 		JobService.get(this.props.params.id).then(function(response) {
+			if(response.data.state == 'FINISHED') {
+				clearInterval(self.interval);
+			}
 			self.setState({
 				job: response.data,
 				loading: false
@@ -38,21 +48,25 @@ var JobsListPage = React.createClass({
 	},
 	renderJob: function() {
 		var job = this.state.job;
-		if(job.state == 'FINISHED') {
-			return (
-				<CardMedia>
-					<video controls style={{margin: 'auto', display: 'block'}}>
-						<source src={job.outputPath} type="video/mp4" />
-						<p>Your browser does not support the video tag.</p>
-					</video>
-				</CardMedia>
-			);
-		} else {
-			return (
-				<p>{JSON.stringify(this.state.job)}</p>
-			);
+		switch(job.state) {
+			case 'FINISHED':
+				return (
+					<CardMedia>
+						<video controls style={{margin: 'auto', display: 'block'}}>
+							<source src={job.outputPath} type="video/mp4" />
+							<p>Your browser does not support the video tag.</p>
+						</video>
+					</CardMedia>
+				);
+			case 'PROCESSING':
+				return (
+					<LinearProgress mode="determinate" value={job.progress || 0}/>
+				);
+			default:
+				return (
+					<LinearProgress mode="indeterminate" />
+				);
 		}
-
 	}
 });
 
