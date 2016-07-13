@@ -2,7 +2,8 @@ var axios = require('axios');
 
 module.exports = {
 	get: getById,
-	create: create
+	create: create,
+	list: list
 };
 
 
@@ -23,4 +24,8 @@ function create(path) {
 	return api.post('/jobs', {
 		inputPath: path
 	});
+}
+
+function list() {
+	return api.get('/jobs');
 }

@@ -1,5 +1,7 @@
 package com.storck.samba.services;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -29,6 +31,21 @@ public class TranscodingJobService {
 		if(job != null) {
 			return Response
 					.ok(job, MediaType.APPLICATION_JSON_TYPE)
+					.header("Access-Control-Allow-Origin", "*")
+			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+			        .build();
+		} else {
+			return Response.serverError().build();
+		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response list() {
+		List<TranscodingJob> jobs = zencoder.list();
+		if(jobs != null) {
+			return Response
+					.ok(jobs, MediaType.APPLICATION_JSON_TYPE)
 					.header("Access-Control-Allow-Origin", "*")
 			        .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 			        .build();

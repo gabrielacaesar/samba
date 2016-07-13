@@ -1,5 +1,8 @@
 package com.storck.samba.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -63,6 +66,24 @@ public class ZencoderService {
 		}
 	}
 	
+	public List<TranscodingJob> list() {
+		try {
+			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs.json?")
+					.header("Zencoder-Api-Key", API_KEY)
+					.accept("application/json")
+					.get(ClientResponse.class);
+			
+			if(response.getStatus() == 200) { //OK
+				return parseList(response.getEntity(String.class));
+			} else {
+				return null;
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
 	private Double getProgress(int id) {
 		try {
 			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs/" + id + "/progress.json?")
@@ -89,6 +110,15 @@ public class ZencoderService {
 		JSONObject payload = new JSONObject();
 		payload.put("input", inputFile);
 		return payload.toString();
+	}
+	
+	private List<TranscodingJob> parseList(String jobsJson) throws Exception {
+		List<TranscodingJob> jobs = new ArrayList<>();
+		JSONArray json = new JSONArray(jobsJson);
+		for(int i = 0; i < json.length(); ++i) {
+			jobs.add(parse(json.getJSONObject(i).toString()));
+		}
+		return jobs;
 	}
 	
 	private TranscodingJob parse(String jobJson) throws Exception {

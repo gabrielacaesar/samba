@@ -26,7 +26,7 @@ var JobsListPage = React.createClass({
 	},
 	render: function() {
 		return (
-			<Card style={{maxWidth: '60%', display: 'block', margin: 'auto', marginTop: '16px'}}>
+			<Card style={{maxWidth: '60%', display: 'block', margin: 'auto', marginTop: '16px', marginBottom: '16px'}}>
 				<CardHeader
 					title={<span>Job #{this.props.params.id}</span>}
 					subtitle={this.state.job ? this.state.job.inputPath : 'Loading...'}
