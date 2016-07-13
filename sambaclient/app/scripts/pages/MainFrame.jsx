@@ -1,27 +1,26 @@
 var React = require('react');
-var { Navbar, Nav, NavItem } = require('react-bootstrap');
-var { Link } = require('react-router');
+var { AppBar } = require('material-ui');
+var VideoCamIcon = require('material-ui/svg-icons/av/videocam').default;
+var ArrowBackIcon = require('material-ui/svg-icons/navigation/arrow-back').default;
 
 var MainFrame = React.createClass({
-
+    navigate: function() {
+        if(this.props.location.pathname != '/') {
+            this.props.history.push('/');
+        }
+    },
     render: function() {
+        var icon = this.props.location.pathname == '/' ? VideoCamIcon : ArrowBackIcon;
         return (
             <div className="App">
-                <Navbar>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="#">Samba</a>
-                        </Navbar.Brand>
-                    </Navbar.Header>
-                    <Nav>
-                        <NavItem eventKey={1}>
-                            <Link to={'/jobs'}>Jobs</Link>
-                        </NavItem>
-                        <NavItem eventKey={2}>
-                            <Link to={'/new'}>New Job</Link>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <AppBar
+                    title="Samba"
+                    iconElementLeft={React.createElement(icon, {
+                        style: { margin: 12, marginRight: 8},
+                        color: 'white',
+                        onClick: this.navigate
+                    })}
+                />
                 {this.props.children}
             </div>
         );

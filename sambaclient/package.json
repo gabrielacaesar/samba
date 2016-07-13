@@ -5,12 +5,13 @@
   "dependencies": {
     "axios": "^0.12.0",
     "classnames": "^2.2.5",
+    "history": "^2.0.0",
     "lodash": "^4.13.1",
+    "material-ui": "^0.15.2",
     "react": "^15.1.0",
-    "react-bootstrap": "^0.29.5",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
-    "reflux": "^0.4.1"
+    "react-tap-event-plugin": "^1.0.0"
   },
   "devDependencies": {
     "aliasify": "^2.0.0",

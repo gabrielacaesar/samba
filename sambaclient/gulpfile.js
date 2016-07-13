@@ -31,7 +31,8 @@ gulp.task('browserify:vendor', function(done) {
     var b = browserify({ debug: true });
     getNPMPackageIds().forEach(function(id) {
         b.require(nodeResolve.sync(id), {
-            expose: id
+            expose: id,
+			debug: true
         });
     });
 
@@ -41,10 +42,6 @@ gulp.task('browserify:vendor', function(done) {
             this.emit('end');
         })
         .pipe(source('vendor.js'))
-        .pipe(buffer())
-        .pipe($.uglify({
-            mangle: false
-        }))
         .pipe(gulp.dest('dist/scripts'))
 		.on('end', done);
 });

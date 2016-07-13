@@ -9,7 +9,6 @@ module.exports = {
 //implkementation
 var api = axios.create({
   baseURL: 'http://localhost:8080/sambaserver/api',
-  timeout: 1000,
   headers: {
 	  'Content-Type': 'application/json',
 	  'Accept': 'application/json'
