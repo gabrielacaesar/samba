@@ -43,6 +43,10 @@ gulp.task('browserify:vendor', function(done) {
             this.emit('end');
         })
         .pipe(source('vendor.js'))
+        .pipe(buffer())
+        .pipe($.uglify({
+            mangle: false
+        }))
         .pipe(gulp.dest('dist/scripts'))
 		.on('end', done);
 });
@@ -65,6 +69,10 @@ gulp.task('browserify:app', function(done) {
 
     b.bundle()
         .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe($.uglify({
+            mangle: false
+        }))
 		.pipe(gulp.dest('dist/scripts'))
 		.on('end', done);
 });

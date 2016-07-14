@@ -9,7 +9,7 @@ module.exports = {
 
 //implkementation
 var api = axios.create({
-  baseURL: 'http://localhost:8080/sambaserver/api',
+  baseURL: 'http://samba-bullkup.rhcloud.com/api',
   headers: {
 	  'Content-Type': 'application/json',
 	  'Accept': 'application/json'
