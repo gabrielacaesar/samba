@@ -11,12 +11,13 @@ import com.storck.samba.dto.JobStatus;
 import com.storck.samba.dto.TranscodingJob;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
 
 public class ZencoderService {
 	
 	static private final String API_KEY = "c38f948c48c2dc98c4d1641a800d821f";
 	
-	private Client client;
+	Client client;	
 	
 	public ZencoderService() {
 		client = Client.create();
@@ -24,10 +25,7 @@ public class ZencoderService {
 
 	public TranscodingJob create(String inputFile) {
 		try {
-			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs.json?")
-					.header("Zencoder-Api-Key", API_KEY)
-					.accept("application/json")
-					.post(ClientResponse.class, generateCreateJobPayload(inputFile));
+			ClientResponse response = executeCreateJobAPICall(inputFile);
 			
 			if(response.getStatus() == 201) { //CREATED
 				TranscodingJob job = parse(response.getEntity(String.class));
@@ -43,13 +41,10 @@ public class ZencoderService {
 			return null;
 		}
 	}
-	
+
 	public TranscodingJob get(int id) {
 		try {
-			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs/" + id + ".json?")
-					.header("Zencoder-Api-Key", API_KEY)
-					.accept("application/json")
-					.get(ClientResponse.class);
+			ClientResponse response = executeGetJobAPICall(id);
 			
 			if(response.getStatus() == 200) { //OK
 				TranscodingJob job = parse(response.getEntity(String.class));
@@ -68,10 +63,7 @@ public class ZencoderService {
 	
 	public List<TranscodingJob> list() {
 		try {
-			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs.json?")
-					.header("Zencoder-Api-Key", API_KEY)
-					.accept("application/json")
-					.get(ClientResponse.class);
+			ClientResponse response = executeListAPICall();
 			
 			if(response.getStatus() == 200) { //OK
 				return parseList(response.getEntity(String.class));
@@ -84,12 +76,9 @@ public class ZencoderService {
 		}
 	}
 	
-	private Double getProgress(int id) {
+	protected Double getProgress(int id) {
 		try {
-			ClientResponse response = client.resource("https://app.zencoder.com/api/v2/jobs/" + id + "/progress.json?")
-					.header("Zencoder-Api-Key", API_KEY)
-					.accept("application/json")
-					.get(ClientResponse.class);
+			ClientResponse response = executeGetJobProgressAPICall(id);
 			
 			if(response.getStatus() == 200) { //OK
 				JSONObject jsonResponse = new JSONObject(response.getEntity(String.class));
@@ -157,6 +146,34 @@ public class ZencoderService {
 		}
 		
 		return job;
+	}
+	
+	protected ClientResponse executeCreateJobAPICall(String inputFile) throws UniformInterfaceException, JSONException {
+		return client.resource("https://app.zencoder.com/api/v2/jobs.json?")
+			.header("Zencoder-Api-Key", API_KEY)
+			.accept("application/json")
+			.post(ClientResponse.class, generateCreateJobPayload(inputFile));
+	}
+	
+	protected ClientResponse executeListAPICall() {
+		return client.resource("https://app.zencoder.com/api/v2/jobs.json?")
+			.header("Zencoder-Api-Key", API_KEY)
+			.accept("application/json")
+			.get(ClientResponse.class);
+	}
+	
+	protected ClientResponse executeGetJobAPICall(int id) {
+		return client.resource("https://app.zencoder.com/api/v2/jobs/" + id + ".json?")
+			.header("Zencoder-Api-Key", API_KEY)
+			.accept("application/json")
+			.get(ClientResponse.class);
+	}
+	
+	protected ClientResponse executeGetJobProgressAPICall(int id) {
+		return client.resource("https://app.zencoder.com/api/v2/jobs/" + id + "/progress.json?")
+			.header("Zencoder-Api-Key", API_KEY)
+			.accept("application/json")
+			.get(ClientResponse.class);
 	}
 
 }
